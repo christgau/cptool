@@ -65,10 +65,14 @@ for f in args.inputs:
     input_file = CPFile(f)
 
     # delete tables not in the select list (if any)
+    tables_to_delete = []
     if len(args.select) > 0:
         for table_name in input_file.tables.keys():
             if table_name not in args.select:
-                input_file.delete_table(table_name)
+                tables_to_delete.append(table_name)
+
+    for table_name in tables_to_delete:
+        input_file.delete_table(table_name)
 
     for table_name in args.delete:
         input_file.delete_table(table_name)
